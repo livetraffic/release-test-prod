@@ -1,0 +1,4 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"LT-396 Current and Future incident list","Verify Unplanned incident details in text view Traffic Hazard page","SUCCESS","2020-05-19T10:55:02.909+10:00[Australia/Sydney]","0.0","28.97"
+"LT-396 Current and Future incident list","Verify Planned incident details in text view Traffic Hazard page","SUCCESS","2020-05-19T10:55:31.899+10:00[Australia/Sydney]","0.0","27.66"
+"LT-396 Current and Future incident list","Verify Major event details in text view Traffic Hazard page","SUCCESS","2020-05-19T10:55:59.577+10:00[Australia/Sydney]","0.0","31.14"

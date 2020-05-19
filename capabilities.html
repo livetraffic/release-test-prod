@@ -1,0 +1,3124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Requirements</title>
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<!--[if IE 7]>
+<link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css">
+<![endif]--><!-- JQuery -->
+<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script><!-- Bootstrap -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="bootstrap/js/bootstrap.min.js"></script><link rel="stylesheet" href="css/core.css"/>
+<link rel="stylesheet" href="css/link.css"/>
+<link type="text/css" media="screen" href="css/screen.css" rel="Stylesheet"/><!-- JQuery-UI -->
+<link type="text/css" href="jqueryui/1.11.2-start/jquery-ui.min.css" rel="Stylesheet" />
+<script type="text/javascript" src="jqueryui/1.11.2-start/jquery-ui.min.js"></script><!-- DataTables -->
+<link type="text/css" href="datatables/1.10.4/media/jqueryui/dataTables.jqueryui.css" rel="Stylesheet"/>
+<link type="text/css" href="css/tables.css" rel="stylesheet" />
+
+<script type="text/javascript" src="datatables/1.10.4/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="datatables/1.10.4/media/jqueryui/dataTables.jqueryui.min.js"></script><!-- jQplot -->
+<!--[if IE]>
+<script language="javascript" type="text/javascript" src="excanvas/3/excanvas.compiled.js"></script>
+<![endif]--><link rel="stylesheet" type="text/css" href="jqplot/1.0.8/jquery.jqplot.min.css"/>
+<script type="text/javascript" src="jqplot/1.0.8/jquery.jqplot.min.js"></script>
+<script type="text/javascript" src="jqplot/1.0.8/plugins/jqplot.pieRenderer.min.js"></script>
+
+
+
+    <script class="code" type="text/javascript">$(document).ready(function () {
+        var plot1 = $.jqplot('coverage_pie_chart', [
+            [
+                ['Passing', 0],
+                ['Pending', 0],
+                ['Ignored', 0],
+                ['Failing', 0],
+                ['Errors',  0],
+                ['Compromised',  0],
+                ['Untested',  21],
+            ]
+        ], {
+            gridPadding: {top: 0, bottom: 38, left: 0, right: 0},
+            seriesColors: [
+                '#30cb23',
+                '#a2f2f2',
+                '#eeeadd',
+                '#f8001f',
+                '#fc6e1f',
+                'fuchsia',
+                'darkgrey'],
+            seriesDefaults: {
+                renderer: $.jqplot.PieRenderer,
+                trendline: {show: false},
+                rendererOptions: {padding: 8, showDataLabels: true}
+            },
+            legend: {
+                show: true,
+                placement: 'outside',
+                rendererOptions: {
+                    numberRows: 3
+                },
+                location: 's',
+                marginTop: '15px'
+            },
+            series: [
+                {label: '0 requirements tested successfully'},
+                {label: '0 requirements pending'},
+                {label: '0} requirements skipped'},
+                {label: '0} requirements with failures'},
+                {label: '0} requirements with errors'},
+                {label: '0} requirements compromised'},
+                {label: '21} requirements untested'},
+            ]
+        });
+        // Results table
+        $('#test-results-table').DataTable({
+            "order": [
+                [1, "asc"]
+            ],
+            "pageLength": 100,
+            "lengthMenu": [[50, 100, 200, -1], [50, 100, 200, "All"]]
+        });
+
+        // Results table
+        $('#req-results-table').DataTable({
+            "order": [
+                [1, "asc"]
+            ],
+            "pageLength": 100,
+            "lengthMenu": [[50, 100, 200, -1], [50, 100, 200, "All"]]
+        });
+
+        $('#examples-table').DataTable({
+            "order": [
+                [2, "asc"]
+            ],
+            "pageLength": 25
+        });
+        $("#requirements-tabs").tabs();
+        $("#test-tabs").tabs();
+    })
+    ;
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".read-more-link").click(function () {
+                $(this).nextAll("div.read-more-text").toggle();
+                var isrc = $(this).find("img").attr('src');
+                if (isrc == 'images/plus.png') {
+                    $(this).find("img").attr("src", function () {
+                        return "images/minus.png";
+                    });
+                } else {
+                    $(this).find("img").attr("src", function () {
+                        return "images/plus.png";
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+
+<body class="results-page">
+<div id="topheader">
+    <div id="topbanner">
+        <div id="logo"><a href="index.html"><img src="images/serenity-logo.png" border="0"/></a></div>
+        <div id="projectname-banner" style="float:right">
+            <span class="projectname"></span>
+        </div>
+    </div>
+</div>
+
+
+<div class="middlecontent">
+    <div id="contenttop">
+        <div class="middlebg">
+            <span class="breadcrumbs">
+            <a href='index.html'>Home</a> > <a href="capabilities.html">Requirements</a>
+
+
+
+            </span>
+        </div>
+        <div class="rightbg"></div>
+    </div>
+
+    <div class="clr"></div>
+
+    <!--/* starts second table*/-->
+
+<div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li >
+            <a href="index.html"><i class="fa fa-check-square-o"></i> Overall Test Results</a>
+        </li>
+        <li class="active">
+            <a href="#"><i class="fa fa-book"></i> Requirements</a>
+        </li>
+        <li >
+            <a href="576946480b52ad056d6f5bddf874399c83582ecf90963cc074a14c70580e7d9f.html"><i class="fa fa-comments-o"></i> Features</a>
+        </li>
+    </ul>
+    <span class="date-and-time"><a href="build-info.html"><i class="fa fa-info-circle"></i></a> Report generated 19-05-2020 10:46</span>
+    <br style="clear:left"/>
+</div>
+
+    <div class="clr"></div>
+
+    <div id="beforetable"></div>
+    <div id="results-dashboard">
+        <div class="middlb">
+            <div class="table">
+
+
+                <div id="requirements-summary">
+                    <div id="coverage_pie_chart"
+                         style="margin-top:10px; margin-left:10px; width:250px; height:250px;"></div>
+                    <div id="coverage_summary">
+                        <div>
+                            <h4>Requirements Overview</h4>
+                            <table class="summary-table">
+                                <head>
+                                    <tr>
+                                        <th>Requirement Type</th>
+                                        <th>Total</th>
+                                        <th>Pass&nbsp;<i class="icon-check"></i></th>
+                                        <th>Fail&nbsp;<i class="icon-thumbs-down"></i></th>
+                                        <th>Pending&nbsp;<i class="icon-calendar"></i></th>
+                                        <th>Ignored&nbsp;<i class="icon-ban-circle"></i></th>
+                                            <th>Untested&nbsp;<i class="icon-question"></i></th>
+                                    </tr>
+                                </head>
+                                <body>
+                                    <tr>
+                                        <td class="summary-leading-column"><a
+                                                href="#requirements-tabs">Features</a></td>
+                                        <td>21</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td>21</td>
+                                            <td>21</td>
+                                    </tr>
+
+                                <tr>
+                                    <td class="summary-leading-column"><a href="#test-results-table">Acceptance Criteria
+                                        (tests)</a></td>
+                                    <td>65</td>
+                                    <td>59</td>
+                                    <td>6</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td></td>
+                                </tr>
+                                </body>
+                            </table>
+                        </div>
+
+
+
+
+
+<div>
+    <h4>Test Result Summary</h4>
+    <table class="summary-table">
+        <head>
+            <tr>
+                <th>Test Type</th>
+                <th>Total</th>
+                <th>Pass&nbsp;<i class="icon-check"/> </th>
+                <th>Fail&nbsp;<i class="icon-thumbs-down"/></th>
+                <th>Pending&nbsp;<i class="icon-calendar"/></th>
+                <th>Ignore/Skip&nbsp;<i class="icon-ban-circle"/></th>
+            </tr>
+        </head>
+        <body>
+        <tr>
+            <td class="summary-leading-column">Automated</td>
+            <td>65</td>
+            <td>59 (91%)</td>
+            <td>6 (9%)</td>
+            <td>0 (0%)</td>
+            <td>0 (0%)</td>
+        </tr>
+        <tr>
+            <td class="summary-leading-column">Manual</td>
+            <td>0</td>
+            <td>0 (0%)</td>
+            <td>0 (0%)</td>
+            <td>0 (0%)</td>
+            <td>0 (0%)</td>
+        </tr>
+        <tr>
+            <td class="summary-leading-column">Total</td>
+            <td>65</td>
+            <td>59 (91%)</td>
+            <td>6 (9%)</td>
+            <td>0 (0%)</td>
+            <td>0 (0%)</td>
+        </tr>
+        <tr>
+            <td class="summary-leading-column">Total Duration</td>
+                <td colspan="5">19 minutes 34 seconds</td>
+        </tr>
+        </body>
+    </table>
+</div>
+                    </div>
+                </div>
+                <div class="clr"></div>
+                <div id="requirements-tabs">
+                        <ul>
+                                <li><a href="#tabs-1">
+                                    Features (6)
+                                </a></li>
+                        </ul>
+                        <div id="tabs-1" class="capabilities-table">
+                            <div id="tabs-1" class="capabilities-table">
+
+
+<div id="req_list_tests" class="table">
+    <div class="test-results">
+        <table id="req-results-table">
+            <thead>
+            <tr>
+                <th width="30" class="test-results-heading">&nbsp;</th>
+                <th width="65" class="test-results-heading">ID</th>
+                <th width="525" class="test-results-heading">Feature</th>
+                    <th width="65" class="test-results-heading">Features</th>
+                <th class="test-results-heading" width="75px">Automated<br/>Tests</th>
+                    <th class="test-results-heading" width="75px">Manual<br/>Tests</th>
+
+                <th width="125px" class="test-results-heading">Test Results</th>
+
+                <th width="125px" class="test-results-heading">Working Features</th>
+            </tr>
+            <tbody>
+
+
+
+                <tr class="test-SUCCESS requirementRow">
+                    <td class="requirementRowCell">
+                        <span class="status_icon"><i class='fa fa-square-o pending-icon ' title='PENDING'></i></span>
+                        <span style="display:none">2</span>
+                    </td>
+                    <td class="cardNumber requirementRowCell"></td>
+
+                    <td class="SUCCESS-text requirementRowCell">
+                        <a href="javaScript:void(0)" class="read-more-link">
+                            <img src="images/plus.png" height="16"/></a>
+                        <span class="requirementName"><a
+                                href="8adf22e45da70dc555a6784b3ee2acff6a5d7ebeb4104efbfa1e77159a48a690.html">Lt 23 map view</a></span>
+
+                        <div class="requirementNarrative read-more-text"></div>
+                    </td>
+
+                        <td class="bluetext requirementRowCell">3</td>
+
+                    <td class="greentext highlighted-value requirementRowCell">0</td>
+<!--
+                    <td class="greentext requirementRowCell">0</td>
+                    <td class="bluetext requirementRowCell">0</td>
+                    <td class="redtext requirementRowCell">0</td>
+                    <td class="lightorangetext requirementRowCell">0</td>
+                    <td class="violettext requirementRowCell">0</td>
+-->
+                        <td class="greentext highlighted-value requirementRowCell">0</td>
+<!--
+                        <td class="greentext requirementRowCell">0</td>
+                        <td class="bluetext requirementRowCell">0</td>
+                        <td class="redtext requirementRowCell">0</td>
+                        <td class="lightorangetext requirementRowCell">0</td>
+                        -->
+
+                    <td width="125px" class="lightgreentext requirementRowCell">
+
+
+<table>
+    <tr>
+        <td width="40px">
+            <div class="small">0%</div>
+        </td>
+        <td width="125px">
+            <div class="percentagebar"
+                 title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)"
+                 style="width: 125px;">
+                <div class="pendingbar"
+                     title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)"
+                     style="width: 0px;">
+                    <div class="ignoredbar"
+                         style="width: 0px;"
+                         title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                        <div class="compromisedbar"
+                             style="width: 0px;"
+                             title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                            <div class="errorbar"
+                                 style="width: 0px;"
+                                 title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                <div class="failingbar"
+                                     style="width: 0px;"
+                                     title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                    <div class="passingbar"
+                                         style="width: 0px;"
+                                         title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+                    </td>
+
+                    <td width="125px" class="lightgreentext requirementRowCell">
+
+
+<table>
+    <tr>
+        <td width="40px">
+            <div class="small">0%</div>
+        </td>
+        <td width="125px">
+            <div class="percentagebar"
+                 title="Lt 23 map view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%"
+                 style="width: 125px;">
+                <div class="pendingbar"
+                     title="Lt 23 map view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%"
+                     style="width: 0px;">
+                    <div class="ignoredbar"
+                         style="width: 0px;"
+                         title="Lt 23 map view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%">
+                        <div class="compromisedbar"
+                             style="width: 0px;"
+                             title="Lt 23 map view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%">
+                            <div class="errorbar"
+                                 style="width: 0px;"
+                                 title="Lt 23 map view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%">
+                                <div class="failingbar"
+                                     style="width: 0px;"
+                                     title="Lt 23 map view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%">
+                                    <div class="passingbar"
+                                         style="width: 0px;"
+                                         title="Lt 23 map view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+                    </td>
+                </tr>
+
+
+                <tr class="test-SUCCESS requirementRow">
+                    <td class="requirementRowCell">
+                        <span class="status_icon"><i class='fa fa-square-o pending-icon ' title='PENDING'></i></span>
+                        <span style="display:none">2</span>
+                    </td>
+                    <td class="cardNumber requirementRowCell"></td>
+
+                    <td class="SUCCESS-text requirementRowCell">
+                        <a href="javaScript:void(0)" class="read-more-link">
+                            <img src="images/plus.png" height="16"/></a>
+                        <span class="requirementName"><a
+                                href="accc5709ec25983265d404c5c0541aefb84bb269d75f87b8d53b6d01266d6091.html">Lt 24 journey planning</a></span>
+
+                        <div class="requirementNarrative read-more-text"></div>
+                    </td>
+
+                        <td class="bluetext requirementRowCell">1</td>
+
+                    <td class="greentext highlighted-value requirementRowCell">0</td>
+<!--
+                    <td class="greentext requirementRowCell">0</td>
+                    <td class="bluetext requirementRowCell">0</td>
+                    <td class="redtext requirementRowCell">0</td>
+                    <td class="lightorangetext requirementRowCell">0</td>
+                    <td class="violettext requirementRowCell">0</td>
+-->
+                        <td class="greentext highlighted-value requirementRowCell">0</td>
+<!--
+                        <td class="greentext requirementRowCell">0</td>
+                        <td class="bluetext requirementRowCell">0</td>
+                        <td class="redtext requirementRowCell">0</td>
+                        <td class="lightorangetext requirementRowCell">0</td>
+                        -->
+
+                    <td width="125px" class="lightgreentext requirementRowCell">
+
+
+<table>
+    <tr>
+        <td width="40px">
+            <div class="small">0%</div>
+        </td>
+        <td width="125px">
+            <div class="percentagebar"
+                 title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)"
+                 style="width: 125px;">
+                <div class="pendingbar"
+                     title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)"
+                     style="width: 0px;">
+                    <div class="ignoredbar"
+                         style="width: 0px;"
+                         title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                        <div class="compromisedbar"
+                             style="width: 0px;"
+                             title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                            <div class="errorbar"
+                                 style="width: 0px;"
+                                 title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                <div class="failingbar"
+                                     style="width: 0px;"
+                                     title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                    <div class="passingbar"
+                                         style="width: 0px;"
+                                         title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+                    </td>
+
+                    <td width="125px" class="lightgreentext requirementRowCell">
+
+
+<table>
+    <tr>
+        <td width="40px">
+            <div class="small">0%</div>
+        </td>
+        <td width="125px">
+            <div class="percentagebar"
+                 title="Lt 24 journey planning:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 1 (100%"
+                 style="width: 125px;">
+                <div class="pendingbar"
+                     title="Lt 24 journey planning:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 1 (100%"
+                     style="width: 0px;">
+                    <div class="ignoredbar"
+                         style="width: 0px;"
+                         title="Lt 24 journey planning:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 1 (100%">
+                        <div class="compromisedbar"
+                             style="width: 0px;"
+                             title="Lt 24 journey planning:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 1 (100%">
+                            <div class="errorbar"
+                                 style="width: 0px;"
+                                 title="Lt 24 journey planning:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 1 (100%">
+                                <div class="failingbar"
+                                     style="width: 0px;"
+                                     title="Lt 24 journey planning:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 1 (100%">
+                                    <div class="passingbar"
+                                         style="width: 0px;"
+                                         title="Lt 24 journey planning:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 1 (100%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+                    </td>
+                </tr>
+
+
+                <tr class="test-SUCCESS requirementRow">
+                    <td class="requirementRowCell">
+                        <span class="status_icon"><i class='fa fa-square-o pending-icon ' title='PENDING'></i></span>
+                        <span style="display:none">2</span>
+                    </td>
+                    <td class="cardNumber requirementRowCell"></td>
+
+                    <td class="SUCCESS-text requirementRowCell">
+                        <a href="javaScript:void(0)" class="read-more-link">
+                            <img src="images/plus.png" height="16"/></a>
+                        <span class="requirementName"><a
+                                href="87b96e37e59129cfb03eda75b8b69368f2559d7fb8ad1925b7a8b4891ffb9dac.html">Lt 25 text view</a></span>
+
+                        <div class="requirementNarrative read-more-text"></div>
+                    </td>
+
+                        <td class="bluetext requirementRowCell">2</td>
+
+                    <td class="greentext highlighted-value requirementRowCell">0</td>
+<!--
+                    <td class="greentext requirementRowCell">0</td>
+                    <td class="bluetext requirementRowCell">0</td>
+                    <td class="redtext requirementRowCell">0</td>
+                    <td class="lightorangetext requirementRowCell">0</td>
+                    <td class="violettext requirementRowCell">0</td>
+-->
+                        <td class="greentext highlighted-value requirementRowCell">0</td>
+<!--
+                        <td class="greentext requirementRowCell">0</td>
+                        <td class="bluetext requirementRowCell">0</td>
+                        <td class="redtext requirementRowCell">0</td>
+                        <td class="lightorangetext requirementRowCell">0</td>
+                        -->
+
+                    <td width="125px" class="lightgreentext requirementRowCell">
+
+
+<table>
+    <tr>
+        <td width="40px">
+            <div class="small">0%</div>
+        </td>
+        <td width="125px">
+            <div class="percentagebar"
+                 title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)"
+                 style="width: 125px;">
+                <div class="pendingbar"
+                     title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)"
+                     style="width: 0px;">
+                    <div class="ignoredbar"
+                         style="width: 0px;"
+                         title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                        <div class="compromisedbar"
+                             style="width: 0px;"
+                             title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                            <div class="errorbar"
+                                 style="width: 0px;"
+                                 title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                <div class="failingbar"
+                                     style="width: 0px;"
+                                     title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                    <div class="passingbar"
+                                         style="width: 0px;"
+                                         title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+                    </td>
+
+                    <td width="125px" class="lightgreentext requirementRowCell">
+
+
+<table>
+    <tr>
+        <td width="40px">
+            <div class="small">0%</div>
+        </td>
+        <td width="125px">
+            <div class="percentagebar"
+                 title="Lt 25 text view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%"
+                 style="width: 125px;">
+                <div class="pendingbar"
+                     title="Lt 25 text view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%"
+                     style="width: 0px;">
+                    <div class="ignoredbar"
+                         style="width: 0px;"
+                         title="Lt 25 text view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%">
+                        <div class="compromisedbar"
+                             style="width: 0px;"
+                             title="Lt 25 text view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%">
+                            <div class="errorbar"
+                                 style="width: 0px;"
+                                 title="Lt 25 text view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%">
+                                <div class="failingbar"
+                                     style="width: 0px;"
+                                     title="Lt 25 text view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%">
+                                    <div class="passingbar"
+                                         style="width: 0px;"
+                                         title="Lt 25 text view:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+                    </td>
+                </tr>
+
+
+                <tr class="test-SUCCESS requirementRow">
+                    <td class="requirementRowCell">
+                        <span class="status_icon"><i class='fa fa-square-o pending-icon ' title='PENDING'></i></span>
+                        <span style="display:none">2</span>
+                    </td>
+                    <td class="cardNumber requirementRowCell"></td>
+
+                    <td class="SUCCESS-text requirementRowCell">
+                        <a href="javaScript:void(0)" class="read-more-link">
+                            <img src="images/plus.png" height="16"/></a>
+                        <span class="requirementName"><a
+                                href="8646473eed760ae7135fac86531095eee607460485b35a1c8d6b5020b98ee1ae.html">Lt 26 site navigation</a></span>
+
+                        <div class="requirementNarrative read-more-text"></div>
+                    </td>
+
+                        <td class="bluetext requirementRowCell">4</td>
+
+                    <td class="greentext highlighted-value requirementRowCell">0</td>
+<!--
+                    <td class="greentext requirementRowCell">0</td>
+                    <td class="bluetext requirementRowCell">0</td>
+                    <td class="redtext requirementRowCell">0</td>
+                    <td class="lightorangetext requirementRowCell">0</td>
+                    <td class="violettext requirementRowCell">0</td>
+-->
+                        <td class="greentext highlighted-value requirementRowCell">0</td>
+<!--
+                        <td class="greentext requirementRowCell">0</td>
+                        <td class="bluetext requirementRowCell">0</td>
+                        <td class="redtext requirementRowCell">0</td>
+                        <td class="lightorangetext requirementRowCell">0</td>
+                        -->
+
+                    <td width="125px" class="lightgreentext requirementRowCell">
+
+
+<table>
+    <tr>
+        <td width="40px">
+            <div class="small">0%</div>
+        </td>
+        <td width="125px">
+            <div class="percentagebar"
+                 title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)"
+                 style="width: 125px;">
+                <div class="pendingbar"
+                     title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)"
+                     style="width: 0px;">
+                    <div class="ignoredbar"
+                         style="width: 0px;"
+                         title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                        <div class="compromisedbar"
+                             style="width: 0px;"
+                             title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                            <div class="errorbar"
+                                 style="width: 0px;"
+                                 title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                <div class="failingbar"
+                                     style="width: 0px;"
+                                     title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                    <div class="passingbar"
+                                         style="width: 0px;"
+                                         title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+                    </td>
+
+                    <td width="125px" class="lightgreentext requirementRowCell">
+
+
+<table>
+    <tr>
+        <td width="40px">
+            <div class="small">0%</div>
+        </td>
+        <td width="125px">
+            <div class="percentagebar"
+                 title="Lt 26 site navigation:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 4 (100%"
+                 style="width: 125px;">
+                <div class="pendingbar"
+                     title="Lt 26 site navigation:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 4 (100%"
+                     style="width: 0px;">
+                    <div class="ignoredbar"
+                         style="width: 0px;"
+                         title="Lt 26 site navigation:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 4 (100%">
+                        <div class="compromisedbar"
+                             style="width: 0px;"
+                             title="Lt 26 site navigation:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 4 (100%">
+                            <div class="errorbar"
+                                 style="width: 0px;"
+                                 title="Lt 26 site navigation:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 4 (100%">
+                                <div class="failingbar"
+                                     style="width: 0px;"
+                                     title="Lt 26 site navigation:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 4 (100%">
+                                    <div class="passingbar"
+                                         style="width: 0px;"
+                                         title="Lt 26 site navigation:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 4 (100%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+                    </td>
+                </tr>
+
+
+                <tr class="test-SUCCESS requirementRow">
+                    <td class="requirementRowCell">
+                        <span class="status_icon"><i class='fa fa-square-o pending-icon ' title='PENDING'></i></span>
+                        <span style="display:none">2</span>
+                    </td>
+                    <td class="cardNumber requirementRowCell"></td>
+
+                    <td class="SUCCESS-text requirementRowCell">
+                        <a href="javaScript:void(0)" class="read-more-link">
+                            <img src="images/plus.png" height="16"/></a>
+                        <span class="requirementName"><a
+                                href="14a99ca35644f35c8f3c6acb7e0b5c79376845e9d464e45d8bd94d72b1edd194.html">Lt 27 view incidents hazards</a></span>
+
+                        <div class="requirementNarrative read-more-text"></div>
+                    </td>
+
+                        <td class="bluetext requirementRowCell">2</td>
+
+                    <td class="greentext highlighted-value requirementRowCell">0</td>
+<!--
+                    <td class="greentext requirementRowCell">0</td>
+                    <td class="bluetext requirementRowCell">0</td>
+                    <td class="redtext requirementRowCell">0</td>
+                    <td class="lightorangetext requirementRowCell">0</td>
+                    <td class="violettext requirementRowCell">0</td>
+-->
+                        <td class="greentext highlighted-value requirementRowCell">0</td>
+<!--
+                        <td class="greentext requirementRowCell">0</td>
+                        <td class="bluetext requirementRowCell">0</td>
+                        <td class="redtext requirementRowCell">0</td>
+                        <td class="lightorangetext requirementRowCell">0</td>
+                        -->
+
+                    <td width="125px" class="lightgreentext requirementRowCell">
+
+
+<table>
+    <tr>
+        <td width="40px">
+            <div class="small">0%</div>
+        </td>
+        <td width="125px">
+            <div class="percentagebar"
+                 title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)"
+                 style="width: 125px;">
+                <div class="pendingbar"
+                     title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)"
+                     style="width: 0px;">
+                    <div class="ignoredbar"
+                         style="width: 0px;"
+                         title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                        <div class="compromisedbar"
+                             style="width: 0px;"
+                             title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                            <div class="errorbar"
+                                 style="width: 0px;"
+                                 title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                <div class="failingbar"
+                                     style="width: 0px;"
+                                     title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                    <div class="passingbar"
+                                         style="width: 0px;"
+                                         title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+                    </td>
+
+                    <td width="125px" class="lightgreentext requirementRowCell">
+
+
+<table>
+    <tr>
+        <td width="40px">
+            <div class="small">0%</div>
+        </td>
+        <td width="125px">
+            <div class="percentagebar"
+                 title="Lt 27 view incidents hazards:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%"
+                 style="width: 125px;">
+                <div class="pendingbar"
+                     title="Lt 27 view incidents hazards:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%"
+                     style="width: 0px;">
+                    <div class="ignoredbar"
+                         style="width: 0px;"
+                         title="Lt 27 view incidents hazards:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%">
+                        <div class="compromisedbar"
+                             style="width: 0px;"
+                             title="Lt 27 view incidents hazards:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%">
+                            <div class="errorbar"
+                                 style="width: 0px;"
+                                 title="Lt 27 view incidents hazards:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%">
+                                <div class="failingbar"
+                                     style="width: 0px;"
+                                     title="Lt 27 view incidents hazards:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%">
+                                    <div class="passingbar"
+                                         style="width: 0px;"
+                                         title="Lt 27 view incidents hazards:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 2 (100%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+                    </td>
+                </tr>
+
+
+                <tr class="test-SUCCESS requirementRow">
+                    <td class="requirementRowCell">
+                        <span class="status_icon"><i class='fa fa-square-o pending-icon ' title='PENDING'></i></span>
+                        <span style="display:none">2</span>
+                    </td>
+                    <td class="cardNumber requirementRowCell"></td>
+
+                    <td class="SUCCESS-text requirementRowCell">
+                        <a href="javaScript:void(0)" class="read-more-link">
+                            <img src="images/plus.png" height="16"/></a>
+                        <span class="requirementName"><a
+                                href="fd8ad82706319e005effd737905a0bfad6109ef2f03284dff0c5c40b5ff235b2.html">Lt 28 traffic cameras</a></span>
+
+                        <div class="requirementNarrative read-more-text"></div>
+                    </td>
+
+                        <td class="bluetext requirementRowCell">3</td>
+
+                    <td class="greentext highlighted-value requirementRowCell">0</td>
+<!--
+                    <td class="greentext requirementRowCell">0</td>
+                    <td class="bluetext requirementRowCell">0</td>
+                    <td class="redtext requirementRowCell">0</td>
+                    <td class="lightorangetext requirementRowCell">0</td>
+                    <td class="violettext requirementRowCell">0</td>
+-->
+                        <td class="greentext highlighted-value requirementRowCell">0</td>
+<!--
+                        <td class="greentext requirementRowCell">0</td>
+                        <td class="bluetext requirementRowCell">0</td>
+                        <td class="redtext requirementRowCell">0</td>
+                        <td class="lightorangetext requirementRowCell">0</td>
+                        -->
+
+                    <td width="125px" class="lightgreentext requirementRowCell">
+
+
+<table>
+    <tr>
+        <td width="40px">
+            <div class="small">0%</div>
+        </td>
+        <td width="125px">
+            <div class="percentagebar"
+                 title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)"
+                 style="width: 125px;">
+                <div class="pendingbar"
+                     title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)"
+                     style="width: 0px;">
+                    <div class="ignoredbar"
+                         style="width: 0px;"
+                         title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                        <div class="compromisedbar"
+                             style="width: 0px;"
+                             title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                            <div class="errorbar"
+                                 style="width: 0px;"
+                                 title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                <div class="failingbar"
+                                     style="width: 0px;"
+                                     title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                    <div class="passingbar"
+                                         style="width: 0px;"
+                                         title="  - Total tests: 0
+  - Passing tests: 0 (0%)
+  - Failing tests: 0 (0%)
+  - Tests with errors: 0 (0%)
+  - Compromised tests 0 (0%)
+  - Pending tests: 0 (0%)
+  - Ignored or skipped tests: 0 (0%)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+                    </td>
+
+                    <td width="125px" class="lightgreentext requirementRowCell">
+
+
+<table>
+    <tr>
+        <td width="40px">
+            <div class="small">0%</div>
+        </td>
+        <td width="125px">
+            <div class="percentagebar"
+                 title="Lt 28 traffic cameras:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%"
+                 style="width: 125px;">
+                <div class="pendingbar"
+                     title="Lt 28 traffic cameras:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%"
+                     style="width: 0px;">
+                    <div class="ignoredbar"
+                         style="width: 0px;"
+                         title="Lt 28 traffic cameras:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%">
+                        <div class="compromisedbar"
+                             style="width: 0px;"
+                             title="Lt 28 traffic cameras:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%">
+                            <div class="errorbar"
+                                 style="width: 0px;"
+                                 title="Lt 28 traffic cameras:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%">
+                                <div class="failingbar"
+                                     style="width: 0px;"
+                                     title="Lt 28 traffic cameras:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%">
+                                    <div class="passingbar"
+                                         style="width: 0px;"
+                                         title="Lt 28 traffic cameras:
+  - Passing Features: 0 (0%
+  - Features Failing: 0 (0%
+  - Features Failing with errors: 0
+  - Compromised Features: 0
+  - Pending Features: 0
+  - Ignored or skipped Features: 0
+  - Untested Features: 3 (100%">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+                            </div>
+                        </div>
+<table>
+    <tr>
+        <td>
+            <div><h3>Acceptance Criteria</h3></div>
+            <div id="test_list_tests" class="table">
+                <div class="test-results">
+                    <table id="test-results-table">
+                        <thead>
+                        <tr>
+                            <th width="50" class="test-results-heading">&nbsp;</th>
+                            <th width="%" class="test-results-heading">Tests</th>
+                            <th width="70" class="test-results-heading">Steps</th>
+
+                            <th width="100" class="test-results-heading">Started</th>
+                            <th width="100" class="test-results-heading">Took<br>(secs)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="3af0c9c9a2ad03944a25d7e83ab88e4d15490f9a7be3b676286e97dd3c89a2a1.html" class="ellipsis"
+                                           title="The Legend section and meaning ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | The Legend section and meaning
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">7</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:46:12">10:46:12</td>
+
+                                <td class="SUCCESS-text">17.57</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="df5f9280905a824a73faf6007fb374ad383114d250bce097e23c7bfe0628b3ea.html" class="ellipsis"
+                                           title="Incident section on map features panel ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Incident section on map features panel
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">6</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:46:30">10:46:30</td>
+
+                                <td class="SUCCESS-text">19.12</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="095805d5b5a369b6338d3999447a1e161dc6f219d4ef91c85ba259bd85a037a4.html" class="ellipsis"
+                                           title="Order of map filter incident icons in Map View ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Order of map filter incident icons in Map View
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">2</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:46:49">10:46:49</td>
+
+                                <td class="SUCCESS-text">6.64</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="0506d5a02f1feacd6e7d96e32bf13a744976961719f5a44ef6be703f849d5d60.html" class="ellipsis"
+                                           title="Filter for Live Traffic Cameras ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Filter for Live Traffic Cameras
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">7</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:46:55">10:46:55</td>
+
+                                <td class="SUCCESS-text">13.85</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="2e854a36176bd845a654f95fd480a7f005ee85751476630c29d37e5a835993ef.html" class="ellipsis"
+                                           title="Filter for Live Traffic Rest Areas ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Filter for Live Traffic Rest Areas
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">7</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:47:09">10:47:09</td>
+
+                                <td class="SUCCESS-text">13.15</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="8b10d0c65f00f9f4f6585b0686c61c0877d1fc0634581e0ebced0dd44a7cb70a.html" class="ellipsis"
+                                           title="Filter for Heavy Vehicle Checking stations ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Filter for Heavy Vehicle Checking stations
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">6</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:47:22">10:47:22</td>
+
+                                <td class="SUCCESS-text">11.65</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="ba9e035f63c0d26a16fd795774de94f1025c3dc42762516a9054c7d3ed7a71ce.html" class="ellipsis"
+                                           title="Filter for future incidents ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Filter for future incidents
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">7</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:47:34">10:47:34</td>
+
+                                <td class="SUCCESS-text">17.79</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="57ffd78903279687ec091731e16134807f3d548a625b132691ca892d7076c601.html" class="ellipsis"
+                                           title="Map View - Refresh Data Time Stamp ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Map View - Refresh Data Time Stamp
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">4</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:47:52">10:47:52</td>
+
+                                <td class="SUCCESS-text">64.35</td>
+                            </tr>
+
+                            <tr class="test-FAILURE">
+                                <td><span class="summary-icon"><i class='fa fa-times-circle failure-icon ' title='FAILURE'></i></span>
+                                    
+                                    <span style="display:none">FAILURE</span></td>
+                                <td class="FAILURE-text">
+                                    <div class="ellipsis">
+
+                                        <a href="cc039364ffff2ea5a14817da2ff431372d57a2078c4bf03b010c4832d6b46880.html" class="ellipsis"
+                                           title="verify auto refresh turn on and off toggle Assertion error: expected 'Auto refre...">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | verify auto refresh turn on and off toggle
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="FAILURE-text">9</td>
+
+
+                                <td class="FAILURE-text" data-sort="2020-05-19 10:48:56">10:48:56</td>
+
+                                <td class="FAILURE-text">66.38</td>
+                            </tr>
+
+                            <tr class="test-FAILURE">
+                                <td><span class="summary-icon"><i class='fa fa-times-circle failure-icon ' title='FAILURE'></i></span>
+                                    
+                                    <span style="display:none">FAILURE</span></td>
+                                <td class="FAILURE-text">
+                                    <div class="ellipsis">
+
+                                        <a href="72959474fdc1538f60cfcd675565aaa1597c4d7c81b8382943afb932b55da6d4.html" class="ellipsis"
+                                           title="Show Plan a trip UI No such element error: No element fou...">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Show Plan a trip UI
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="FAILURE-text">15</td>
+
+
+                                <td class="FAILURE-text" data-sort="2020-05-19 10:50:03">10:50:03</td>
+
+                                <td class="FAILURE-text">10.99</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="fdf510a5113be7f30ef9cdde7dbad1c7955f3c6c4f7b698452fc4ba500edbaae.html" class="ellipsis"
+                                           title="Clear Trip Plan ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Clear Trip Plan
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">20</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:50:14">10:50:14</td>
+
+                                <td class="SUCCESS-text">18.85</td>
+                            </tr>
+
+                            <tr class="test-FAILURE">
+                                <td><span class="summary-icon"><i class='fa fa-times-circle failure-icon ' title='FAILURE'></i></span>
+                                    
+                                    <span style="display:none">FAILURE</span></td>
+                                <td class="FAILURE-text">
+                                    <div class="ellipsis">
+
+                                        <a href="ce633b06dc1815cf420e4aa767f6c2f0dc3a2c466fb3ea13e39fb40c4a34419e.html" class="ellipsis"
+                                           title="Options tab to avoid tolls or highways No such element error: No element fou...">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Options tab to avoid tolls or highways
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="FAILURE-text">21</td>
+
+
+                                <td class="FAILURE-text" data-sort="2020-05-19 10:50:32">10:50:32</td>
+
+                                <td class="FAILURE-text">10.4</td>
+                            </tr>
+
+                            <tr class="test-FAILURE">
+                                <td><span class="summary-icon"><i class='fa fa-times-circle failure-icon ' title='FAILURE'></i></span>
+                                    
+                                    <span style="display:none">FAILURE</span></td>
+                                <td class="FAILURE-text">
+                                    <div class="ellipsis">
+
+                                        <a href="0a594e0d5fe8e0e58be1f813a620c21656e50d5994464e01aff3771b0a1afce3.html" class="ellipsis"
+                                           title="Reverse trip order No such element error: No element fou...">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Reverse trip order
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="FAILURE-text">23</td>
+
+
+                                <td class="FAILURE-text" data-sort="2020-05-19 10:50:43">10:50:43</td>
+
+                                <td class="FAILURE-text">9.2</td>
+                            </tr>
+
+                            <tr class="test-FAILURE">
+                                <td><span class="summary-icon"><i class='fa fa-times-circle failure-icon ' title='FAILURE'></i></span>
+                                    
+                                    <span style="display:none">FAILURE</span></td>
+                                <td class="FAILURE-text">
+                                    <div class="ellipsis">
+
+                                        <a href="3299a4675ed89860a56394bfd0460b22ac31037d63b71e519bb64e5f3759c96e.html" class="ellipsis"
+                                           title="Search input field No such element error: No element fou...">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Search input field
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="FAILURE-text">15</td>
+
+
+                                <td class="FAILURE-text" data-sort="2020-05-19 10:50:52">10:50:52</td>
+
+                                <td class="FAILURE-text">8.69</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="006fb946d54c45375863b715281ad1157ac68ac2c8b797a4275c53565719c778.html" class="ellipsis"
+                                           title="Incidents on route list front end ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Incidents on route list front end
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">22</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:51:01">10:51:01</td>
+
+                                <td class="SUCCESS-text">23.51</td>
+                            </tr>
+
+                            <tr class="test-FAILURE">
+                                <td><span class="summary-icon"><i class='fa fa-times-circle failure-icon ' title='FAILURE'></i></span>
+                                    
+                                    <span style="display:none">FAILURE</span></td>
+                                <td class="FAILURE-text">
+                                    <div class="ellipsis">
+
+                                        <a href="61860807fcd2567dede79088405082d31b8ed6c435e11c6edb014b8f90c0433a.html" class="ellipsis"
+                                           title="Change default route via tabs No such element error: No element fou...">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Change default route via tabs
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="FAILURE-text">21</td>
+
+
+                                <td class="FAILURE-text" data-sort="2020-05-19 10:51:24">10:51:24</td>
+
+                                <td class="FAILURE-text">10.46</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="3710a4e152a789d9e568407e0ad3eb1856eeb2b67d71134f59d28052af9a9e44.html" class="ellipsis"
+                                           title="Text View - Home page ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Text View - Home page
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">6</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:51:35">10:51:35</td>
+
+                                <td class="SUCCESS-text">9.97</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="d57ffedf7931b648e61ba36ac90e53dad792665fd55b274b413766c5e339f686.html" class="ellipsis"
+                                           title="Text View - Map filter Incidents icons in right order ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Text View - Map filter Incidents icons in right order
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">4</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:51:45">10:51:45</td>
+
+                                <td class="SUCCESS-text">8.92</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="381ca0bc4e2caaebd585cf5b77d40e3be5a9f2570b82dc0fbc9ca4228eebcddf.html" class="ellipsis"
+                                           title="Text View - Refresh Data Time Stamp and Toggle ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Text View - Refresh Data Time Stamp and Toggle
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">6</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:51:54">10:51:54</td>
+
+                                <td class="SUCCESS-text">68.36</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="328c101a742e6cce62053c3aa9a283be71862f46f433163dd888d4fcf0553dfa.html" class="ellipsis"
+                                           title="Incident filters for text view list ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Incident filters for text view list
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">16</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:53:02">10:53:02</td>
+
+                                <td class="SUCCESS-text">25.97</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="3d0404938ffa27944413fff880708605cfd2a97d0bba2ea9d95496f2fad91d03.html" class="ellipsis"
+                                           title="Text View - Ended Incident details ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Text View - Ended Incident details
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">14</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:53:28">10:53:28</td>
+
+                                <td class="SUCCESS-text">14.41</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="0e797eb31a8a3a8cff9dd4f15d0d8002c07cad915c53014018a06204258c5e5f.html" class="ellipsis"
+                                           title="Text View - Accordion Functionality for incident cards ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Text View - Accordion Functionality for incident cards
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">14</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:53:42">10:53:42</td>
+
+                                <td class="SUCCESS-text">25.38</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="d2b381c65f1e3991c66f61148824967ceb571936b966104f0cac7b1534fd6459.html" class="ellipsis"
+                                           title="All Sydney and All Regional filters ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | All Sydney and All Regional filters
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">14</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:54:08">10:54:08</td>
+
+                                <td class="SUCCESS-text">14.57</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="d7f70e5be34f01260c8de6ebe4f24412989ad0709d6dd521f90fa023dce11d57.html" class="ellipsis"
+                                           title="All Sydney - Sub location filters ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | All Sydney - Sub location filters
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">19</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:54:22">10:54:22</td>
+
+                                <td class="SUCCESS-text">19.37</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="61a144f172b0f18ff75dd8542b48da047b01abfb3eb5a4bdcc9e0dd31d793484.html" class="ellipsis"
+                                           title="All Regional - Sub location filters ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | All Regional - Sub location filters
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">17</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:54:42">10:54:42</td>
+
+                                <td class="SUCCESS-text">20.61</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="b303516c80087dc8007350bc3a22f9b9b901be4a49a434cd4678fb9406e18972.html" class="ellipsis"
+                                           title="Verify Unplanned incident details in text view Traffic Hazard page ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Verify Unplanned incident details in text view Traffic Hazard page
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">13</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:55:02">10:55:02</td>
+
+                                <td class="SUCCESS-text">28.97</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="a69923cfad989bdf0982108a8efb526db942c7df3e1edb7e0d732eabae7a2f0b.html" class="ellipsis"
+                                           title="Verify Planned incident details in text view Traffic Hazard page ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Verify Planned incident details in text view Traffic Hazard page
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">14</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:55:31">10:55:31</td>
+
+                                <td class="SUCCESS-text">27.66</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="58c8a9e8a8a8ae8048b05070d8f96ca6914938d33ec414088ca704b9b776f4da.html" class="ellipsis"
+                                           title="Verify Major event details in text view Traffic Hazard page ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Verify Major event details in text view Traffic Hazard page
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">20</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:55:59">10:55:59</td>
+
+                                <td class="SUCCESS-text">31.14</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="bbeec9fe30bee0ff757f12d972b1eac86fc5328877e9190854801b1db22f2f73.html" class="ellipsis"
+                                           title="High Impact Banner Display and Dismiss ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | High Impact Banner Display and Dismiss
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">7</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:56:30">10:56:30</td>
+
+                                <td class="SUCCESS-text">8.78</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="ade50e418a10e3e7e361bf602d32a97d280d38b8e237bb206535d2d9feff2e10.html" class="ellipsis"
+                                           title="Verify display of menu items and page footers ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Verify display of menu items and page footers
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">5</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:56:39">10:56:39</td>
+
+                                <td class="SUCCESS-text">6.12</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="ba0c65355c487507afac0a0a3f3751b294c7db5275a1f46c1e34c06434403936.html" class="ellipsis"
+                                           title="Verify display of options in the homepage side menu bar ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Verify display of options in the homepage side menu bar
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">4</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:56:45">10:56:45</td>
+
+                                <td class="SUCCESS-text">7.15</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="85a409cbd811aace6e23d652089abeaa7a2bf6bfa15295ccd0e444d86da44068.html" class="ellipsis"
+                                           title="Navigate to Live Traffic NSW - Facebook ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Navigate to Live Traffic NSW - Facebook
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">3</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:56:52">10:56:52</td>
+
+                                <td class="SUCCESS-text">11.84</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="fe98e1f306fac16bdb689c23977795201353d6cc510703b7d9a66900eb0bcc5f.html" class="ellipsis"
+                                           title="Navigate to Live Traffic Sydney - Twitter ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Navigate to Live Traffic Sydney - Twitter
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">3</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:57:04">10:57:04</td>
+
+                                <td class="SUCCESS-text">8.75</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="673626cec8251f9f0bae0368a927e03a516848e69c1ea14997374dd5fffc374c.html" class="ellipsis"
+                                           title="Navigate to Live Traffic NSW - Twitter ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Navigate to Live Traffic NSW - Twitter
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">3</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:57:13">10:57:13</td>
+
+                                <td class="SUCCESS-text">9.17</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="bc6ed7bde572d722a4da186f4fa16d7f706c2d96ca73ed8370206f097e216984.html" class="ellipsis"
+                                           title="Navigate to Online Privacy Page ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Navigate to Online Privacy Page
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">3</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:57:22">10:57:22</td>
+
+                                <td class="SUCCESS-text">8.58</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="69ab5297c021194ec1e765edbc93be35c1a567a554ef5a3ed995df54f89ba0c3.html" class="ellipsis"
+                                           title="Navigate to Copyright Page ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Navigate to Copyright Page
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">3</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:57:31">10:57:31</td>
+
+                                <td class="SUCCESS-text">8.62</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="fdfd5af5ad4127b8ca94f6be45e96114a5b17fd8b0b15cbfc393dfafa71a2210.html" class="ellipsis"
+                                           title="Navigate to Transport for NSW Home page from LiveTraffic Website ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Navigate to Transport for NSW Home page from LiveTraffic Website
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">4</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:57:39">10:57:39</td>
+
+                                <td class="SUCCESS-text">8.78</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="97ce1e39e3be37e3b964865530627b6cc3b86e207bd427c0567415eed906af51.html" class="ellipsis"
+                                           title="Navigate to Terms and Condition Page ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Navigate to Terms and Condition Page
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">4</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:57:48">10:57:48</td>
+
+                                <td class="SUCCESS-text">5.72</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="11ea22b4a81065b565776fa148e43222fb8198fec16a2bb1e13d65d96ea8d8da.html" class="ellipsis"
+                                           title="Navigate to Help Page ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Navigate to Help Page
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">5</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:57:54">10:57:54</td>
+
+                                <td class="SUCCESS-text">5.56</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="c14866aecd70e08c0136cfad725b8d1efc17909dca568266d9c51a6c27745c34.html" class="ellipsis"
+                                           title="Map Native Controls ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Map Native Controls
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">2</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:58:00">10:58:00</td>
+
+                                <td class="SUCCESS-text">2.96</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="659d868e7f2713190dbc3cfe7b65ab4d75d4fbe80f936bb4beca4d58bd6c3572.html" class="ellipsis"
+                                           title="Incident section on map features panel ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Incident section on map features panel
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">28</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:58:03">10:58:03</td>
+
+                                <td class="SUCCESS-text">58.48</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="b8cc7205b8f5f4d40fcf4f1d7b775130fb911da1b119e9ad6224089616203244.html" class="ellipsis"
+                                           title="Incident title and Incident type label ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Incident title and Incident type label
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">5</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:59:01">10:59:01</td>
+
+                                <td class="SUCCESS-text">11.18</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="b1795ad50668e88bafc304cbb062b6cc000de66fc487270884ae3fe0494dca69.html" class="ellipsis"
+                                           title="Show incident summary card ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Show incident summary card
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">7</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:59:12">10:59:12</td>
+
+                                <td class="SUCCESS-text">12.13</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="4f59daecb916746d9bc7e79c11ef70ac058635fad97abee195c499d81cdc448e.html" class="ellipsis"
+                                           title="Show traffic condition and impact ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Show traffic condition and impact
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">5</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:59:24">10:59:24</td>
+
+                                <td class="SUCCESS-text">10.95</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="2ad2e80eb2ab1be6da2c0a68849f4d67a22925f00919f2a147b50586b9f4d5a0.html" class="ellipsis"
+                                           title="Incident started and last checked day date and time details ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Incident started and last checked day date and time details
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">5</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:59:35">10:59:35</td>
+
+                                <td class="SUCCESS-text">11.37</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="50425194e47d921accb00956b8f71576744af874cd00c27db67e690be16bb86c.html" class="ellipsis"
+                                           title="Planned incident - impact on lanes and roads ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Planned incident - impact on lanes and roads
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">5</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:59:47">10:59:47</td>
+
+                                <td class="SUCCESS-text">9.84</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="c25b28a06f0a5d7b92dfa8deb0bac9614b506d07d0a2f5c759c6778b2d4629a4.html" class="ellipsis"
+                                           title="Unplanned incident - impact on lanes and roads ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Unplanned incident - impact on lanes and roads
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">5</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 10:59:57">10:59:57</td>
+
+                                <td class="SUCCESS-text">10.28</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="d4e5d6a5d0ba5fdc690bcf8dc15fc872b0097a9c498d6840e5a480364c216e32.html" class="ellipsis"
+                                           title="Public Transport Diversion and Other Advice ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Public Transport Diversion and Other Advice
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">5</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:00:07">11:00:07</td>
+
+                                <td class="SUCCESS-text">10.08</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="09df26c2e6961b061e3bd838a2d67d2b71df3aefb55b82e4b8af48eb278f22da.html" class="ellipsis"
+                                           title="Traffic advice snippets ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Traffic advice snippets
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">5</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:00:17">11:00:17</td>
+
+                                <td class="SUCCESS-text">9.77</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="f00ac0cbd461186321b8880fa1d93cd50a78724116c9ca621c153efa6acea034.html" class="ellipsis"
+                                           title="Traffic arrangements accordions ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Traffic arrangements accordions
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">13</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:00:27">11:00:27</td>
+
+                                <td class="SUCCESS-text">15.09</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="ec6e3196e1b39734a3c3e02a79d6b01268268944536d0e4944c842456c6e452f.html" class="ellipsis"
+                                           title="Traffic advice info ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Traffic advice info
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">7</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:00:42">11:00:42</td>
+
+                                <td class="SUCCESS-text">15.52</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="413aa34a5c6a96b9b64fd49c2c313fdc1195c082c4625226d79a0d877093b166.html" class="ellipsis"
+                                           title="Viewing Selected Camera output ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Viewing Selected Camera output
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">16</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:00:57">11:00:57</td>
+
+                                <td class="SUCCESS-text">17.98</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="54c282f23c62bb9b5c2afd6df63b8a4217fd6fcfbe0702731e30b5cc8b26b79d.html" class="ellipsis"
+                                           title="View Camera Region - Inner Sydney ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | View Camera Region - Inner Sydney
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">9</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:01:15">11:01:15</td>
+
+                                <td class="SUCCESS-text">11.72</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="70251573e90843962d143ae02fbd8dfb6731dedf1f1f10134f75051aa9724cd8.html" class="ellipsis"
+                                           title="View Camera Region - Sydney North ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | View Camera Region - Sydney North
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">9</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:01:27">11:01:27</td>
+
+                                <td class="SUCCESS-text">11.03</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="6885474cc823f6cde27712fe1091f4582e8c076e7607387e62913ac44b9e224e.html" class="ellipsis"
+                                           title="View Camera Region - Sydney West ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | View Camera Region - Sydney West
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">9</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:01:38">11:01:38</td>
+
+                                <td class="SUCCESS-text">10.5</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="12f00fe3a1b98ed773f0a62e8c0a19fb81156638cc2672c66b98ce6a24caac14.html" class="ellipsis"
+                                           title="View Camera Region - Sydney South ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | View Camera Region - Sydney South
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">9</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:01:49">11:01:49</td>
+
+                                <td class="SUCCESS-text">10.93</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="68f1f3c8b19e90fb7df6a315ac8d9efc9449ac751ae14448bf92cb0603f4d706.html" class="ellipsis"
+                                           title="View Camera Region - Regional North ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | View Camera Region - Regional North
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">9</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:02:00">11:02:00</td>
+
+                                <td class="SUCCESS-text">10.82</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="a87f2df37e59e2745b64f381493442f8247d047eee1a263d8452b71f6c5fbf7b.html" class="ellipsis"
+                                           title="View Camera Region - Regional South ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | View Camera Region - Regional South
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">9</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:02:11">11:02:11</td>
+
+                                <td class="SUCCESS-text">10.18</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="252222ba23f800032b24a396554767d3b915b866feb0ddc5e68fec9044383c84.html" class="ellipsis"
+                                           title="View Camera Region - All Regional ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | View Camera Region - All Regional
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">9</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:02:21">11:02:21</td>
+
+                                <td class="SUCCESS-text">12.56</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="ecfa5f0f63dd7753c7e58c635d14b891bc5e943a27737220e091294925e63129.html" class="ellipsis"
+                                           title="View Camera Region - All NSW ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | View Camera Region - All NSW
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">9</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:02:33">11:02:33</td>
+
+                                <td class="SUCCESS-text">14.79</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="2fc314b61f11f9dadbe941349b638035e2c921d6a7be0fa49ff4513961076f64.html" class="ellipsis"
+                                           title="View Camera Region - All Sydney ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | View Camera Region - All Sydney
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">10</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:02:48">11:02:48</td>
+
+                                <td class="SUCCESS-text">15.57</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="c1f0545be2fdd51e8def560fba8ee39aaa33a9f68cc1545d452e0e7867b3f404.html" class="ellipsis"
+                                           title="Place webcamera icons on map ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Place webcamera icons on map
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">9</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:03:04">11:03:04</td>
+
+                                <td class="SUCCESS-text">14.91</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="e5f90dc15c20fd4b9544f044c0312323034fabb64081ff52084112c98f629a77.html" class="ellipsis"
+                                           title="Tag each camera feed with the relevant URI ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Tag each camera feed with the relevant URI
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">8</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:03:19">11:03:19</td>
+
+                                <td class="SUCCESS-text">10.13</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="a1457bff5f69194d43a2b356ed34de963e8995d55efae3ef1af8a9d37e20682d.html" class="ellipsis"
+                                           title="Request to refresh camera feed ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Request to refresh camera feed
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">12</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:03:29">11:03:29</td>
+
+                                <td class="SUCCESS-text">74.56</td>
+                            </tr>
+
+                            <tr class="test-SUCCESS">
+                                <td><span class="summary-icon"><i class='fa fa-check-square-o success-icon ' title='SUCCESS'></i></span>
+                                    
+                                    <span style="display:none">SUCCESS</span></td>
+                                <td class="SUCCESS-text">
+                                    <div class="ellipsis">
+
+                                        <a href="62a9c77b634fca54c152621263ce9df1b0e71612af07ace1226cff70463011f7.html" class="ellipsis"
+                                           title="Update refresh time stamp on Map screen ">
+                                            <i class="fa fa-chrome" aria-hidden="true"></i> | Update refresh time stamp on Map screen
+                                                <span class="related-issue-title"></span>
+                                        </a>
+                                    </div>
+                                </td>
+
+                                <td class="SUCCESS-text">4</td>
+
+
+                                <td class="SUCCESS-text" data-sort="2020-05-19 11:04:43">11:04:43</td>
+
+                                <td class="SUCCESS-text">64.12</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="bottomfooter">
+    <span class="version">Serenity BDD version UNKNOWN</span>
+</div>
+</body>
+</html>

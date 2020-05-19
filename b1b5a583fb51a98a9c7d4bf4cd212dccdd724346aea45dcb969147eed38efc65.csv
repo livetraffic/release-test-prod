@@ -1,0 +1,8 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"LT-48 Trip Plan A to B","Show Plan a trip UI","FAILURE","2020-05-19T10:50:03.043+10:00[Australia/Sydney]","0.0","10.99"
+"LT-48 Trip Plan A to B","Clear Trip Plan","SUCCESS","2020-05-19T10:50:14.046+10:00[Australia/Sydney]","0.0","18.85"
+"LT-48 Trip Plan A to B","Options tab to avoid tolls or highways","FAILURE","2020-05-19T10:50:32.909+10:00[Australia/Sydney]","0.0","10.4"
+"LT-48 Trip Plan A to B","Reverse trip order","FAILURE","2020-05-19T10:50:43.322+10:00[Australia/Sydney]","0.0","9.2"
+"LT-48 Trip Plan A to B","Search input field","FAILURE","2020-05-19T10:50:52.527+10:00[Australia/Sydney]","0.0","8.69"
+"LT-48 Trip Plan A to B","Incidents on route list front end","SUCCESS","2020-05-19T10:51:01.241+10:00[Australia/Sydney]","0.0","23.51"
+"LT-48 Trip Plan A to B","Change default route via tabs","FAILURE","2020-05-19T10:51:24.755+10:00[Australia/Sydney]","0.0","10.46"

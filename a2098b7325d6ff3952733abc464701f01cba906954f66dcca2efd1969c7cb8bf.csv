@@ -1,0 +1,3 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"LT-273 Text View of Incidents","All Sydney and All Regional filters","SUCCESS","2020-05-19T10:54:08.293+10:00[Australia/Sydney]","0.0","14.57"
+"LT-273 Text View of Incidents","All Regional - Sub location filters","SUCCESS","2020-05-19T10:54:42.264+10:00[Australia/Sydney]","0.0","20.61"

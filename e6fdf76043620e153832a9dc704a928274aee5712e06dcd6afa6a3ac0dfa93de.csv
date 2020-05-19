@@ -1,0 +1,8 @@
+"Story","Title","Result","Date","Stability","Duration (s)"
+"LT-22 Map Feature Panel","Incident section on map features panel","SUCCESS","2020-05-19T10:46:30.046+10:00[Australia/Sydney]","0.0","19.12"
+"LT-48 Trip Plan A to B","Show Plan a trip UI","FAILURE","2020-05-19T10:50:03.043+10:00[Australia/Sydney]","0.0","10.99"
+"LT-3 Main Menu","Verify display of menu items and page footers","SUCCESS","2020-05-19T10:56:39.529+10:00[Australia/Sydney]","0.0","6.12"
+"LT-3 Main Menu","Navigate to Terms and Condition Page","SUCCESS","2020-05-19T10:57:48.759+10:00[Australia/Sydney]","0.0","5.72"
+"LT-3 Main Menu","Navigate to Help Page","SUCCESS","2020-05-19T10:57:54.495+10:00[Australia/Sydney]","0.0","5.56"
+"LT-3 Main Menu","Map Native Controls","SUCCESS","2020-05-19T10:58:00.073+10:00[Australia/Sydney]","0.0","2.96"
+"LT-56 Traffic Camera LHS panel","Viewing Selected Camera output","SUCCESS","2020-05-19T11:00:57.957+10:00[Australia/Sydney]","0.0","17.98"
